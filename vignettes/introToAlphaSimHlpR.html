@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<meta name="author" content="Vignette Author" />
+
+<meta name="date" content="2020-03-17" />
+
+<title>alphaSimHlpR</title>
+
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">alphaSimHlpR</h1>
+<h4 class="author">Vignette Author</h4>
+<h4 class="date">2020-03-17</h4>
+
+
+
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># Make sure you have the right packages installed</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="kw">library</span>(tidyverse); <span class="kw">library</span>(magrittr); <span class="kw">library</span>(AlphaSimR); <span class="kw">library</span>(alphaSimHlpR)</span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="co">#&gt; ── Attaching packages ────────────</span></span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="co">#&gt; ✓ ggplot2 3.3.0     ✓ purrr   0.3.3</span></span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="co">#&gt; ✓ tibble  2.1.3     ✓ dplyr   0.8.5</span></span>
+<span id="cb1-6"><a href="#cb1-6"></a><span class="co">#&gt; ✓ tidyr   1.0.2     ✓ stringr 1.4.0</span></span>
+<span id="cb1-7"><a href="#cb1-7"></a><span class="co">#&gt; ✓ readr   1.3.1     ✓ forcats 0.5.0</span></span>
+<span id="cb1-8"><a href="#cb1-8"></a><span class="co">#&gt; ── Conflicts ─────────────────────</span></span>
+<span id="cb1-9"><a href="#cb1-9"></a><span class="co">#&gt; x dplyr::filter() masks stats::filter()</span></span>
+<span id="cb1-10"><a href="#cb1-10"></a><span class="co">#&gt; x dplyr::lag()    masks stats::lag()</span></span>
+<span id="cb1-11"><a href="#cb1-11"></a><span class="co">#&gt; </span></span>
+<span id="cb1-12"><a href="#cb1-12"></a><span class="co">#&gt; Attaching package: &#39;magrittr&#39;</span></span>
+<span id="cb1-13"><a href="#cb1-13"></a><span class="co">#&gt; The following object is masked from &#39;package:purrr&#39;:</span></span>
+<span id="cb1-14"><a href="#cb1-14"></a><span class="co">#&gt; </span></span>
+<span id="cb1-15"><a href="#cb1-15"></a><span class="co">#&gt;     set_names</span></span>
+<span id="cb1-16"><a href="#cb1-16"></a><span class="co">#&gt; The following object is masked from &#39;package:tidyr&#39;:</span></span>
+<span id="cb1-17"><a href="#cb1-17"></a><span class="co">#&gt; </span></span>
+<span id="cb1-18"><a href="#cb1-18"></a><span class="co">#&gt;     extract</span></span>
+<span id="cb1-19"><a href="#cb1-19"></a><span class="co">#&gt; Loading required package: R6</span></span>
+<span id="cb1-20"><a href="#cb1-20"></a><span class="co">#&gt; </span></span>
+<span id="cb1-21"><a href="#cb1-21"></a><span class="co">#&gt; Attaching package: &#39;AlphaSimR&#39;</span></span>
+<span id="cb1-22"><a href="#cb1-22"></a><span class="co">#&gt; The following object is masked from &#39;package:dplyr&#39;:</span></span>
+<span id="cb1-23"><a href="#cb1-23"></a><span class="co">#&gt; </span></span>
+<span id="cb1-24"><a href="#cb1-24"></a><span class="co">#&gt;     mutate</span></span>
+<span id="cb1-25"><a href="#cb1-25"></a>mutate&lt;-dplyr<span class="op">::</span>mutate <span class="co"># fixes the fact the AlphaSimR has a mutate() function</span></span>
+<span id="cb1-26"><a href="#cb1-26"></a><span class="co">## </span><span class="al">NOTE</span><span class="co">: if you want mutate() from AlhpaSimR you have to do AlphaSimR::mutate() now.</span></span></code></pre></div>
+<div id="parameters-to-specify" class="section level1">
+<h1>Parameters to specify</h1>
+<p>I’m in favor of keeping things in a data.frame (rectangular) shape as much as possible.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>schemeParams&lt;-<span class="kw">tibble</span>(<span class="dt">stageName=</span><span class="kw">c</span>(<span class="st">&quot;SDN&quot;</span>, <span class="st">&quot;CET&quot;</span>, <span class="st">&quot;PYT&quot;</span>, <span class="st">&quot;AYT&quot;</span>),</span>
+<span id="cb2-2"><a href="#cb2-2"></a>       <span class="dt">nEntries=</span><span class="kw">c</span>(<span class="dv">200</span>, <span class="dv">60</span>, <span class="dv">20</span>, <span class="dv">10</span>), <span class="co"># JL used nCrosses*nProgeny for nEntries at SDN stage...</span></span>
+<span id="cb2-3"><a href="#cb2-3"></a>       <span class="dt">nReps=</span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>), <span class="co"># Number of reps used in each stage</span></span>
+<span id="cb2-4"><a href="#cb2-4"></a>       <span class="dt">nLocs=</span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>), <span class="co"># Number of locations used in each stage</span></span>
+<span id="cb2-5"><a href="#cb2-5"></a>       <span class="dt">nChecks=</span><span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>), <span class="co"># Number of checks used in each stage</span></span>
+<span id="cb2-6"><a href="#cb2-6"></a>       <span class="co"># Checks are replicated the same as experimental entries</span></span>
+<span id="cb2-7"><a href="#cb2-7"></a>       <span class="co"># Checks are to provide connectivity across trial stages and years</span></span>
+<span id="cb2-8"><a href="#cb2-8"></a>       <span class="dt">nCheckPlotsPerRep=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">10</span>,<span class="dv">10</span>,<span class="dv">5</span>), <span class="co"># instead of using entryToCheckRatio, specify numb. check plots per rep</span></span>
+<span id="cb2-9"><a href="#cb2-9"></a>       <span class="dt">phenoEval=</span><span class="kw">c</span>(F,T,T,T), <span class="co"># When does pheontyping occur</span></span>
+<span id="cb2-10"><a href="#cb2-10"></a>       <span class="co"># this would also facilitate adding a &quot;conservation&quot; stage</span></span>
+<span id="cb2-11"><a href="#cb2-11"></a>       <span class="co"># in which lines can be sent, with small cost to hang out </span></span>
+<span id="cb2-12"><a href="#cb2-12"></a>       <span class="co"># and be potential selection candidates in the future</span></span>
+<span id="cb2-13"><a href="#cb2-13"></a>       <span class="dt">newOffspringEnter=</span><span class="kw">c</span>(T,F,F,F), <span class="co"># How to specify where to put results of crossing</span></span>
+<span id="cb2-14"><a href="#cb2-14"></a>       <span class="dt">candidateParents=</span><span class="kw">c</span>(T,F,F,F), <span class="co"># from which stages can we draw parents for crossing</span></span>
+<span id="cb2-15"><a href="#cb2-15"></a>       <span class="dt">errVars=</span><span class="kw">c</span>(<span class="ot">NA</span>,<span class="dv">146</span>,<span class="dv">82</span>,<span class="dv">40</span>),</span>
+<span id="cb2-16"><a href="#cb2-16"></a>       <span class="dt">varietiesExit=</span><span class="kw">c</span>(F,F,F,T)); <span class="co"># not totally sure what to do with this... </span></span>
+<span id="cb2-17"><a href="#cb2-17"></a>       <span class="co"># when pipeline ends (almost always) we output varieties</span></span>
+<span id="cb2-18"><a href="#cb2-18"></a>schemeParams</span>
+<span id="cb2-19"><a href="#cb2-19"></a><span class="co">#&gt; # A tibble: 4 x 11</span></span>
+<span id="cb2-20"><a href="#cb2-20"></a><span class="co">#&gt;   stageName nEntries nReps nLocs nChecks nCheckPlotsPerR… phenoEval</span></span>
+<span id="cb2-21"><a href="#cb2-21"></a><span class="co">#&gt;   &lt;chr&gt;        &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;            &lt;dbl&gt; &lt;lgl&gt;    </span></span>
+<span id="cb2-22"><a href="#cb2-22"></a><span class="co">#&gt; 1 SDN            200     1     1       0                0 FALSE    </span></span>
+<span id="cb2-23"><a href="#cb2-23"></a><span class="co">#&gt; 2 CET             60     1     1       1               10 TRUE     </span></span>
+<span id="cb2-24"><a href="#cb2-24"></a><span class="co">#&gt; 3 PYT             20     2     1       1               10 TRUE     </span></span>
+<span id="cb2-25"><a href="#cb2-25"></a><span class="co">#&gt; 4 AYT             10     2     2       1                5 TRUE     </span></span>
+<span id="cb2-26"><a href="#cb2-26"></a><span class="co">#&gt; # … with 4 more variables: newOffspringEnter &lt;lgl&gt;, candidateParents &lt;lgl&gt;,</span></span>
+<span id="cb2-27"><a href="#cb2-27"></a><span class="co">#&gt; #   errVars &lt;dbl&gt;, varietiesExit &lt;lgl&gt;</span></span></code></pre></div>
+<p>ideally the scheme parameters table drives year-to-year operations with minimal additional parameter inputs</p>
+<div id="simulate-founders" class="section level2">
+<h2>Simulate founders</h2>
+<p>Simulate founding haplotypes, add genetic architecture and sample an initial set of founding individuals (genotypes).</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>initialPop&lt;-<span class="kw">initiatePop</span>(<span class="dt">nFounders=</span><span class="dv">50</span>,<span class="dt">nChr=</span><span class="dv">1</span>,<span class="dt">segSites=</span><span class="dv">50</span>,<span class="dt">nQTL=</span><span class="dv">5</span>,<span class="dt">nSNP=</span><span class="dv">40</span>,<span class="dt">genVar=</span><span class="dv">40</span>,<span class="dt">meanDD=</span><span class="fl">0.8</span>,<span class="dt">varDD=</span><span class="fl">0.05</span>,</span>
+<span id="cb3-2"><a href="#cb3-2"></a>                        <span class="dt">schemeParams=</span>schemeParams)</span>
+<span id="cb3-3"><a href="#cb3-3"></a>initialPop <span class="co"># tidy output</span></span>
+<span id="cb3-4"><a href="#cb3-4"></a><span class="co">#&gt; # A tibble: 1 x 3</span></span>
+<span id="cb3-5"><a href="#cb3-5"></a><span class="co">#&gt;   SP         founders checks</span></span>
+<span id="cb3-6"><a href="#cb3-6"></a><span class="co">#&gt;   &lt;list&gt;     &lt;list&gt;   &lt;list&gt;</span></span>
+<span id="cb3-7"><a href="#cb3-7"></a><span class="co">#&gt; 1 &lt;SimParam&gt; &lt;Pop&gt;    &lt;Pop&gt;</span></span></code></pre></div>
+</div>
+<div id="initial-field-trials" class="section level2">
+<h2>Initial field trials</h2>
+<p>Goal is to create some initial historical data to drive the first selections of parents and variety development entries.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>initialTP&lt;-<span class="kw">runPhenoTrial</span>(<span class="dt">nReps=</span><span class="dv">2</span>,<span class="dt">nLocs=</span><span class="dv">2</span>,<span class="dt">nChecks=</span><span class="dv">0</span>,</span>
+<span id="cb4-2"><a href="#cb4-2"></a>                         <span class="dt">entries =</span> initialPop<span class="op">$</span>founders[[<span class="dv">1</span>]],</span>
+<span id="cb4-3"><a href="#cb4-3"></a>                         <span class="dt">SP =</span> initialPop<span class="op">$</span>SP[[<span class="dv">1</span>]],</span>
+<span id="cb4-4"><a href="#cb4-4"></a>                         <span class="dt">errVars =</span> <span class="dv">40</span>,</span>
+<span id="cb4-5"><a href="#cb4-5"></a>                         <span class="dt">trialName =</span> <span class="st">&quot;HistoricalData&quot;</span>)</span>
+<span id="cb4-6"><a href="#cb4-6"></a>initialTP</span>
+<span id="cb4-7"><a href="#cb4-7"></a><span class="co">#&gt; # A tibble: 50 x 6</span></span>
+<span id="cb4-8"><a href="#cb4-8"></a><span class="co">#&gt;    id    mother father trialName         pheno errVar</span></span>
+<span id="cb4-9"><a href="#cb4-9"></a><span class="co">#&gt;    &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;             &lt;dbl&gt;  &lt;dbl&gt;</span></span>
+<span id="cb4-10"><a href="#cb4-10"></a><span class="co">#&gt;  1 1     0      0      HistoricalData  11.6        10</span></span>
+<span id="cb4-11"><a href="#cb4-11"></a><span class="co">#&gt;  2 2     0      0      HistoricalData -10.3        10</span></span>
+<span id="cb4-12"><a href="#cb4-12"></a><span class="co">#&gt;  3 3     0      0      HistoricalData  -1.44       10</span></span>
+<span id="cb4-13"><a href="#cb4-13"></a><span class="co">#&gt;  4 4     0      0      HistoricalData   3.25       10</span></span>
+<span id="cb4-14"><a href="#cb4-14"></a><span class="co">#&gt;  5 5     0      0      HistoricalData -10.4        10</span></span>
+<span id="cb4-15"><a href="#cb4-15"></a><span class="co">#&gt;  6 6     0      0      HistoricalData -12.6        10</span></span>
+<span id="cb4-16"><a href="#cb4-16"></a><span class="co">#&gt;  7 7     0      0      HistoricalData  -2.62       10</span></span>
+<span id="cb4-17"><a href="#cb4-17"></a><span class="co">#&gt;  8 8     0      0      HistoricalData   0.0498     10</span></span>
+<span id="cb4-18"><a href="#cb4-18"></a><span class="co">#&gt;  9 9     0      0      HistoricalData   5.63       10</span></span>
+<span id="cb4-19"><a href="#cb4-19"></a><span class="co">#&gt; 10 10    0      0      HistoricalData  -0.708      10</span></span>
+<span id="cb4-20"><a href="#cb4-20"></a><span class="co">#&gt; # … with 40 more rows</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>K&lt;-<span class="kw">makeGRM</span>(<span class="dt">pop=</span>initialPop<span class="op">$</span>founders[[<span class="dv">1</span>]],</span>
+<span id="cb5-2"><a href="#cb5-2"></a>           <span class="dt">SP=</span>initialPop<span class="op">$</span>SP[[<span class="dv">1</span>]],</span>
+<span id="cb5-3"><a href="#cb5-3"></a>           <span class="dt">type=</span><span class="st">&quot;Add&quot;</span>)</span>
+<span id="cb5-4"><a href="#cb5-4"></a>ini_gblup&lt;-<span class="kw">fitModel</span>(<span class="dt">phenoDF =</span> initialTP, <span class="dt">grm =</span> K)</span>
+<span id="cb5-5"><a href="#cb5-5"></a><span class="co">#&gt; Loading required package: sommer</span></span>
+<span id="cb5-6"><a href="#cb5-6"></a><span class="co">#&gt; Loading required package: Matrix</span></span>
+<span id="cb5-7"><a href="#cb5-7"></a><span class="co">#&gt; </span></span>
+<span id="cb5-8"><a href="#cb5-8"></a><span class="co">#&gt; Attaching package: &#39;Matrix&#39;</span></span>
+<span id="cb5-9"><a href="#cb5-9"></a><span class="co">#&gt; The following objects are masked from &#39;package:tidyr&#39;:</span></span>
+<span id="cb5-10"><a href="#cb5-10"></a><span class="co">#&gt; </span></span>
+<span id="cb5-11"><a href="#cb5-11"></a><span class="co">#&gt;     expand, pack, unpack</span></span>
+<span id="cb5-12"><a href="#cb5-12"></a><span class="co">#&gt; Loading required package: MASS</span></span>
+<span id="cb5-13"><a href="#cb5-13"></a><span class="co">#&gt; </span></span>
+<span id="cb5-14"><a href="#cb5-14"></a><span class="co">#&gt; Attaching package: &#39;MASS&#39;</span></span>
+<span id="cb5-15"><a href="#cb5-15"></a><span class="co">#&gt; The following object is masked from &#39;package:dplyr&#39;:</span></span>
+<span id="cb5-16"><a href="#cb5-16"></a><span class="co">#&gt; </span></span>
+<span id="cb5-17"><a href="#cb5-17"></a><span class="co">#&gt;     select</span></span>
+<span id="cb5-18"><a href="#cb5-18"></a><span class="co">#&gt; Loading required package: lattice</span></span>
+<span id="cb5-19"><a href="#cb5-19"></a><span class="co">#&gt; Loading required package: crayon</span></span>
+<span id="cb5-20"><a href="#cb5-20"></a><span class="co">#&gt; </span></span>
+<span id="cb5-21"><a href="#cb5-21"></a><span class="co">#&gt; Attaching package: &#39;crayon&#39;</span></span>
+<span id="cb5-22"><a href="#cb5-22"></a><span class="co">#&gt; The following object is masked from &#39;package:ggplot2&#39;:</span></span>
+<span id="cb5-23"><a href="#cb5-23"></a><span class="co">#&gt; </span></span>
+<span id="cb5-24"><a href="#cb5-24"></a><span class="co">#&gt;     %+%</span></span></code></pre></div>
+<p>Initiate pop. improvement pipeline by generating initial selections and crossing to make progeny.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>initialProgeny&lt;-<span class="kw">selectAndCross</span>(<span class="dt">candSelCrit=</span>ini_gblup<span class="op">$</span>blups[[<span class="dv">1</span>]],</span>
+<span id="cb6-2"><a href="#cb6-2"></a>                               <span class="dt">candPop=</span>initialPop<span class="op">$</span>founders[[<span class="dv">1</span>]],</span>
+<span id="cb6-3"><a href="#cb6-3"></a>                               <span class="dt">nParents=</span><span class="dv">10</span>, <span class="dt">nProgeny=</span><span class="dv">10</span>, <span class="dt">nCrosses=</span><span class="dv">20</span>,</span>
+<span id="cb6-4"><a href="#cb6-4"></a>                               <span class="dt">SP=</span>initialPop<span class="op">$</span>SP[[<span class="dv">1</span>]])</span></code></pre></div>
+</div>
+</div>
+<div id="initiate-vdp" class="section level1">
+<h1>Initiate VDP</h1>
+<p>Get BLUPs. In the future, would like to compare to using GETGVs.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>ini_blup&lt;-<span class="kw">fitModel</span>(<span class="dt">phenoDF =</span> initialTP)</span></code></pre></div>
+<p>Make initial selection of clones to enter into the VDP. Set-up initial trials</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>initrials&lt;-<span class="kw">advanceVDP</span>(<span class="dt">stageName=</span><span class="st">&quot;CET&quot;</span>,</span>
+<span id="cb8-2"><a href="#cb8-2"></a>                      <span class="dt">entries=</span>initialPop<span class="op">$</span>founders[[<span class="dv">1</span>]],</span>
+<span id="cb8-3"><a href="#cb8-3"></a>                      <span class="dt">schemeParams =</span> schemeParams, </span>
+<span id="cb8-4"><a href="#cb8-4"></a>                      <span class="dt">candSelCrit =</span> ini_gblup<span class="op">$</span>blups[[<span class="dv">1</span>]])</span></code></pre></div>
+</div>
+<div id="run-breeding-scheme" class="section level1">
+<h1>Run breeding scheme</h1>
+<p>Each of below is an input for running breeding scheme</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="co"># DF to keep track of all germplasm</span></span>
+<span id="cb9-2"><a href="#cb9-2"></a>germplasm&lt;-<span class="kw">bind_rows</span>(<span class="kw">tibble</span>(<span class="dt">yearOfOrigin=</span><span class="dv">0</span>,<span class="dt">Pop=</span><span class="kw">list</span>(initialPop<span class="op">$</span>founders[[<span class="dv">1</span>]])),</span>
+<span id="cb9-3"><a href="#cb9-3"></a>                     <span class="kw">tibble</span>(<span class="dt">yearOfOrigin=</span><span class="dv">1</span>,<span class="dt">Pop=</span><span class="kw">list</span>(initialProgeny)))</span>
+<span id="cb9-4"><a href="#cb9-4"></a><span class="co"># DF to keep track of field (phenotype) data </span></span>
+<span id="cb9-5"><a href="#cb9-5"></a><span class="co">## by adding to this each year, we accumulate training data</span></span>
+<span id="cb9-6"><a href="#cb9-6"></a><span class="co">## and track germplasm through the pipeline</span></span>
+<span id="cb9-7"><a href="#cb9-7"></a>fielddata&lt;-initialTP <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb9-8"><a href="#cb9-8"></a><span class="st">      </span><span class="kw">mutate</span>(<span class="dt">year=</span><span class="dv">0</span>)</span>
+<span id="cb9-9"><a href="#cb9-9"></a><span class="co"># DF with trials to run in year 1</span></span>
+<span id="cb9-10"><a href="#cb9-10"></a><span class="co">## basically the initial staging</span></span>
+<span id="cb9-11"><a href="#cb9-11"></a><span class="co">## all years after will follow the breeding scheme schematic DF</span></span>
+<span id="cb9-12"><a href="#cb9-12"></a><span class="co">## must correspond with stages in the scheme so </span></span>
+<span id="cb9-13"><a href="#cb9-13"></a><span class="co">## each trial can be logically advanced through the pipeline</span></span>
+<span id="cb9-14"><a href="#cb9-14"></a><span class="co">## will overwrite this each year, so it represents the current years _fields_ </span></span>
+<span id="cb9-15"><a href="#cb9-15"></a>initrials&lt;-<span class="kw">bind_rows</span>(<span class="kw">tibble</span>(<span class="dt">stageName=</span><span class="st">&quot;SDN&quot;</span>, </span>
+<span id="cb9-16"><a href="#cb9-16"></a>                            <span class="dt">entries=</span><span class="kw">list</span>(initialProgeny)),</span>
+<span id="cb9-17"><a href="#cb9-17"></a>                     initrials)</span>
+<span id="cb9-18"><a href="#cb9-18"></a><span class="co"># DF specifying pipeline</span></span>
+<span id="cb9-19"><a href="#cb9-19"></a>schemeParams</span>
+<span id="cb9-20"><a href="#cb9-20"></a><span class="co">#&gt; # A tibble: 4 x 11</span></span>
+<span id="cb9-21"><a href="#cb9-21"></a><span class="co">#&gt;   stageName nEntries nReps nLocs nChecks nCheckPlotsPerR… phenoEval</span></span>
+<span id="cb9-22"><a href="#cb9-22"></a><span class="co">#&gt;   &lt;chr&gt;        &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;            &lt;dbl&gt; &lt;lgl&gt;    </span></span>
+<span id="cb9-23"><a href="#cb9-23"></a><span class="co">#&gt; 1 SDN            200     1     1       0                0 FALSE    </span></span>
+<span id="cb9-24"><a href="#cb9-24"></a><span class="co">#&gt; 2 CET             60     1     1       1               10 TRUE     </span></span>
+<span id="cb9-25"><a href="#cb9-25"></a><span class="co">#&gt; 3 PYT             20     2     1       1               10 TRUE     </span></span>
+<span id="cb9-26"><a href="#cb9-26"></a><span class="co">#&gt; 4 AYT             10     2     2       1                5 TRUE     </span></span>
+<span id="cb9-27"><a href="#cb9-27"></a><span class="co">#&gt; # … with 4 more variables: newOffspringEnter &lt;lgl&gt;, candidateParents &lt;lgl&gt;,</span></span>
+<span id="cb9-28"><a href="#cb9-28"></a><span class="co">#&gt; #   errVars &lt;dbl&gt;, varietiesExit &lt;lgl&gt;</span></span>
+<span id="cb9-29"><a href="#cb9-29"></a><span class="co"># sim params</span></span>
+<span id="cb9-30"><a href="#cb9-30"></a>SP&lt;-initialPop<span class="op">$</span>SP[[<span class="dv">1</span>]]</span>
+<span id="cb9-31"><a href="#cb9-31"></a><span class="co"># checks</span></span>
+<span id="cb9-32"><a href="#cb9-32"></a>checks&lt;-initialPop<span class="op">$</span>checks[[<span class="dv">1</span>]]</span>
+<span id="cb9-33"><a href="#cb9-33"></a></span>
+<span id="cb9-34"><a href="#cb9-34"></a>nYears2run&lt;-<span class="dv">6</span> <span class="co"># years to run breedings cheme for</span></span>
+<span id="cb9-35"><a href="#cb9-35"></a>nParents &lt;-<span class="st"> </span><span class="dv">10</span> <span class="co"># Number of parents in the crossing nursery</span></span>
+<span id="cb9-36"><a href="#cb9-36"></a>nCrosses &lt;-<span class="st"> </span><span class="dv">20</span> <span class="co"># Number of crosses entering the pipeline</span></span>
+<span id="cb9-37"><a href="#cb9-37"></a>nProgeny &lt;-<span class="st"> </span><span class="dv">10</span> <span class="co"># Number of progeny per cross</span></span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>testrun&lt;-<span class="kw">runBreedingProgram</span>(nYears2run,schemeParams,</span>
+<span id="cb10-2"><a href="#cb10-2"></a>                            germplasm,fielddata,initrials,SP,checks,</span>
+<span id="cb10-3"><a href="#cb10-3"></a>                            nParents,nCrosses,nProgeny)</span>
+<span id="cb10-4"><a href="#cb10-4"></a><span class="co">#&gt; Joining, by = &quot;stageName&quot;</span></span>
+<span id="cb10-5"><a href="#cb10-5"></a><span class="co">#&gt; [1] &quot;Phenotype field trials - Year 1&quot;</span></span>
+<span id="cb10-6"><a href="#cb10-6"></a><span class="co">#&gt; [1] &quot;Selection and Crossing - Year 1&quot;</span></span>
+<span id="cb10-7"><a href="#cb10-7"></a><span class="co">#&gt; [1] &quot;Advance the VDP - Year 1&quot;</span></span>
+<span id="cb10-8"><a href="#cb10-8"></a><span class="co">#&gt; Joining, by = &quot;stageName&quot;</span></span>
+<span id="cb10-9"><a href="#cb10-9"></a><span class="co">#&gt; [1] &quot;Phenotype field trials - Year 2&quot;</span></span>
+<span id="cb10-10"><a href="#cb10-10"></a><span class="co">#&gt; [1] &quot;Selection and Crossing - Year 2&quot;</span></span>
+<span id="cb10-11"><a href="#cb10-11"></a><span class="co">#&gt; [1] &quot;Advance the VDP - Year 2&quot;</span></span>
+<span id="cb10-12"><a href="#cb10-12"></a><span class="co">#&gt; Joining, by = &quot;stageName&quot;</span></span>
+<span id="cb10-13"><a href="#cb10-13"></a><span class="co">#&gt; [1] &quot;Phenotype field trials - Year 3&quot;</span></span>
+<span id="cb10-14"><a href="#cb10-14"></a><span class="co">#&gt; [1] &quot;Selection and Crossing - Year 3&quot;</span></span>
+<span id="cb10-15"><a href="#cb10-15"></a><span class="co">#&gt; [1] &quot;Advance the VDP - Year 3&quot;</span></span>
+<span id="cb10-16"><a href="#cb10-16"></a><span class="co">#&gt; Joining, by = &quot;stageName&quot;</span></span>
+<span id="cb10-17"><a href="#cb10-17"></a><span class="co">#&gt; [1] &quot;Phenotype field trials - Year 4&quot;</span></span>
+<span id="cb10-18"><a href="#cb10-18"></a><span class="co">#&gt; [1] &quot;Selection and Crossing - Year 4&quot;</span></span>
+<span id="cb10-19"><a href="#cb10-19"></a><span class="co">#&gt; [1] &quot;Advance the VDP - Year 4&quot;</span></span>
+<span id="cb10-20"><a href="#cb10-20"></a><span class="co">#&gt; Joining, by = &quot;stageName&quot;</span></span>
+<span id="cb10-21"><a href="#cb10-21"></a><span class="co">#&gt; [1] &quot;Phenotype field trials - Year 5&quot;</span></span>
+<span id="cb10-22"><a href="#cb10-22"></a><span class="co">#&gt; [1] &quot;Selection and Crossing - Year 5&quot;</span></span>
+<span id="cb10-23"><a href="#cb10-23"></a><span class="co">#&gt; [1] &quot;Advance the VDP - Year 5&quot;</span></span>
+<span id="cb10-24"><a href="#cb10-24"></a><span class="co">#&gt; Joining, by = &quot;stageName&quot;</span></span>
+<span id="cb10-25"><a href="#cb10-25"></a><span class="co">#&gt; [1] &quot;Phenotype field trials - Year 6&quot;</span></span>
+<span id="cb10-26"><a href="#cb10-26"></a><span class="co">#&gt; [1] &quot;Selection and Crossing - Year 6&quot;</span></span>
+<span id="cb10-27"><a href="#cb10-27"></a><span class="co">#&gt; [1] &quot;Advance the VDP - Year 6&quot;</span></span></code></pre></div>
+</div>
+<div id="get-results" class="section level1">
+<h1>Get results</h1>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a>testrun[[<span class="st">&quot;germplasm&quot;</span>]][[<span class="dv">1</span>]] <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb11-2"><a href="#cb11-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">meanGV=</span><span class="kw">map_dbl</span>(Pop,meanG)) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb11-3"><a href="#cb11-3"></a><span class="st">  </span><span class="kw">ggplot</span>(.,<span class="kw">aes</span>(<span class="dt">x=</span>yearOfOrigin,<span class="dt">y=</span>meanGV)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>() <span class="op">+</span><span class="st"> </span></span>
+<span id="cb11-4"><a href="#cb11-4"></a><span class="st">  </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span></span>
+<span id="cb11-5"><a href="#cb11-5"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">data=</span>testrun[[<span class="st">&quot;released&quot;</span>]][[<span class="dv">1</span>]] <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb11-6"><a href="#cb11-6"></a><span class="st">               </span><span class="kw">reduce</span>(.,rbind) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb11-7"><a href="#cb11-7"></a><span class="st">               </span><span class="kw">unnest</span>(BestClone) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb11-8"><a href="#cb11-8"></a><span class="st">               </span><span class="kw">mutate</span>(<span class="dt">meanGV=</span><span class="kw">map_dbl</span>(entries,meanG)),</span>
+<span id="cb11-9"><a href="#cb11-9"></a>             <span class="kw">aes</span>(<span class="dt">x=</span>yearReleased,<span class="dt">y=</span>meanGV),</span>
+<span id="cb11-10"><a href="#cb11-10"></a>             <span class="dt">color=</span><span class="st">&#39;red&#39;</span>)</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

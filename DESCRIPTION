@@ -1,0 +1,19 @@
+Package: alphaSimHlpR
+Type: Package
+Title: What the Package Does (Title Case)
+Version: 0.1.0
+Author: Marnin Wolfe
+Maintainer: Marnin Wolfe <wolfemd@gmail.com>
+Description: Functions to facilitate simulating breeding programs with AlphaSimR. Based on and inspired by Jean-luc's AlphaSimHlpR.
+License: CC-BY 4.0
+Encoding: UTF-8
+LazyData: true
+Imports:
+    dplyr, 
+    tidyr,
+    purrr,
+    magrittr,
+    AlphaSimR
+Suggests: knitr, rmarkdown
+RoxygenNote: 7.1.0
+VignetteBuilder: knitr
